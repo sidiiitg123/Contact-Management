@@ -1,6 +1,9 @@
 package com.spring.smartcontact.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +13,19 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @NotBlank(message = "name field is required")
+    @Size(min=2,max=20,message = "min 2 and max 20 char are allowed")
     private String name;
 
     @Column(unique = true)
+    @Email(regexp ="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$",message = "Invalid email")
     private String email;
+
+    @NotBlank
     private String password;
     private String role;
+
+
     private boolean enabled;
     private String imageUrl;
     @Column(length = 1000)

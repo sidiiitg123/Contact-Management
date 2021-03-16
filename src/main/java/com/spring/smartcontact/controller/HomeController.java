@@ -1,26 +1,73 @@
 package com.spring.smartcontact.controller;
 
+import com.spring.smartcontact.helper.Message;
+import com.spring.smartcontact.model.User;
+import com.spring.smartcontact.repository.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
 
+    private UserRepository userRepository;
+
+    public HomeController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @RequestMapping("/")
-    public String home(Model model){
-        model.addAttribute("smart","this is smart contact manager");
+    public String home(Model model) {
+        model.addAttribute("smart", "this is smart contact manager");
 
         return "home";
     }
+
     @RequestMapping("/base")
-    public String base(){
+    public String base() {
 
         return "base";
     }
-    @RequestMapping("/signUp")
-    public String signUp(){
 
+    @RequestMapping("/signUp")
+    public String signUp(Model model) {
+        model.addAttribute("user", new User());
         return "signUp";
+    }
+
+    @PostMapping("/do_register")
+    public String registerUser(@ModelAttribute("user") User user,
+                               @RequestParam(value = "agreement", defaultValue = "false") boolean agreement,
+                               Model model,HttpSession session) {
+        try {
+            if (!agreement) {
+                throw new Exception("you have not agreed the terms and condition");
+            }
+            user.setRole("ROLE_USER");
+            user.setEnabled(true);
+
+            System.out.println("Agreement" + agreement);
+            System.out.println(user);
+            User result = this.userRepository.save(user);
+            model.addAttribute("user", result);
+          session.setAttribute("message", new Message("successfully registered","alert-success" ));
+            return "signUp";
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("user",user);
+            Message m=new Message("Something went Wrong!!"+e.getMessage(),"alert-danger" );
+            session.setAttribute("message",m);
+
+            return "signUp";
+        }
+
+
     }
 }

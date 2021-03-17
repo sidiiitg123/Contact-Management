@@ -1,6 +1,7 @@
 package com.spring.smartcontact.controller;
 
 
+import com.spring.smartcontact.helper.Message;
 import com.spring.smartcontact.model.Contact;
 import com.spring.smartcontact.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.spring.smartcontact.repository.UserRepository;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -68,7 +70,7 @@ public class UserController {
     }
 
     @PostMapping("/process-contact")
-    public String processContact(@ModelAttribute Contact contact, @RequestParam("profileImage") MultipartFile file,Principal principal){
+    public String processContact(@ModelAttribute Contact contact, @RequestParam("profileImage") MultipartFile file, Principal principal, HttpSession session){
         try{
             String username=principal.getName();
             User user=userRepository.getUserByEmail(username);
@@ -87,8 +89,10 @@ public class UserController {
             contact.setUser(user);
             user.getContacts().add(contact);
             userRepository.save(user);
+            session.setAttribute("message",new Message("Contact is inserted successfully!!","alert-success"));
             System.out.println(contact);
         }catch (Exception e){
+            session.setAttribute("message",new Message("error in inserting contact!!","alert-danger"));
             System.out.println("ERROR" + e.getMessage());
             e.printStackTrace();
         }

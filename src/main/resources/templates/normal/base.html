@@ -57,6 +57,14 @@
 <!--content-->
 <div id="main" class="content mt-5">
     <i onclick="openNav()" class="fas fa-bars m-3"></i>
+
+    <div th:if="${session.message}" class="container">
+        <div class="alert " th:classappend="${session.message.type}" role="alert">
+            <span th:text="${session.message.content}"></span>
+        </div>
+        <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+    </div>
+
     <div  th:replace="${content}"></div>
 </div>
 <!--endcontent-->

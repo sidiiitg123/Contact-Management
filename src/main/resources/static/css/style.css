@@ -115,6 +115,7 @@ input:focus{
     width: 100%;
     padding: 10px 25px;
     color: grey;
+    z-index: 999999999999999999999999999;
 }
 .sidebar a:hover{
     background: #e2e2e2;
@@ -154,5 +155,8 @@ input:focus{
    color: #e2e2e2;
 }
 .fas{
+    color: #e2e2e2;
+}
+.sec2{
     color: #e2e2e2;
 }

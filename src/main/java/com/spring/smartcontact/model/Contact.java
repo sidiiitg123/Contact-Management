@@ -1,6 +1,7 @@
 package com.spring.smartcontact.model;
 
 import javax.persistence.*;
+import java.awt.*;
 
 @Entity
 @Table(name = "CONTACT")
@@ -95,4 +96,6 @@ public class Contact {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
 }

@@ -3,6 +3,8 @@ package com.spring.smartcontact.controller;
 import com.spring.smartcontact.helper.Message;
 import com.spring.smartcontact.model.User;
 import com.spring.smartcontact.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,8 +19,14 @@ import javax.xml.ws.Binding;
 
 @Controller
 public class HomeController {
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private UserRepository userRepository;
+    @Autowired
+    public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    private final UserRepository userRepository;
 
     public HomeController(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -58,6 +66,7 @@ public class HomeController {
             }
             user.setRole("ROLE_USER");
             user.setEnabled(true);
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
             System.out.println("Agreement" + agreement);
             System.out.println(user);

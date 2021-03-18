@@ -160,3 +160,10 @@ input:focus{
 .sec2{
     color: #e2e2e2;
 }
+.table{
+    background-color: #e2e2e2;
+}
+.test{
+    width: 90%;
+    height: 90%;
+}

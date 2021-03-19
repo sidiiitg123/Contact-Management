@@ -4,14 +4,28 @@
     <meta charset="UTF-8">
     <title >Title</title>
     <link rel="stylesheet" th:href="@{/css/style2.css}" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script type='text/javascript' src='js/script.js'></script>
 </head>
 <body>
 
 <section class="banner d-flex justify-content-center align-items-center">
 
 <div class="test ">
+
     <div >
         <h1 class="text-center">Your contacts</h1>
+<!--        search-->
+        <div class="search-container my-4">
+            <input onkeyup="myfunc()" id="search-input" type="text" class="form-control" placeholder="search your contacts" />
+            <div class="search-result">
+
+<!--                result goes here-->
+                    <h2> this is result</h2>
+            </div>
+        </div>
         <table class="table">
             <thead>
                 <tr>

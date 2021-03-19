@@ -1,5 +1,7 @@
 package com.spring.smartcontact.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.awt.*;
 
@@ -20,6 +22,7 @@ public class Contact {
     private String description;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     public User getUser() {

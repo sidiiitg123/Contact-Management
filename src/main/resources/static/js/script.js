@@ -23,3 +23,20 @@ function closeSide() {
 document.getElementById("main").style.marginLeft="0";
     document.getElementById("mySidebar").style.display="none";
 }
+function deleteContact(cid){
+    swal({
+        title: "Are you sure?",
+        text: "you want to delete this contact!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                window.location="/user/delete/"+cid;
+            } else {
+                swal("Your contactis safe!");
+            }
+        });
+
+}

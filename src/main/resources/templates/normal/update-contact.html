@@ -12,8 +12,9 @@
         <div class="container-fluid mt-1">
             <div class="row">
                 <div class="col-md-10 offset-md-1">
-                    <form th:object="${contact}" th:action="@{/user/process-contact}" method="post" enctype="multipart/form-data"
+                    <form th:object="${contact}" th:action="@{/user/process-contact1}" method="post" enctype="multipart/form-data"
                           class="mt-2">
+                        <input type="hidden" th:value="${contact.cid}" name="cid">
                         <!--                        firstname-->
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -56,7 +57,7 @@
                             <input th:value="${contact.work}" required type="text" id="work1" name="work" placeholder="Enter work here" class="form-control" />
                         </div>
                         <div class="form-group mt-3">
-                            <textarea th:text="${contact.work}" class="form-control" placeholder="Enter contact description" name="description" id="mytextarea" rows="10"></textarea>
+                            <textarea th:text="${contact.description}" class="form-control" placeholder="Enter contact description" name="description" id="mytextarea" rows="10"></textarea>
                         </div>
 
 <!--                        contact image-->

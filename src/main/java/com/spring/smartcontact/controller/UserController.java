@@ -80,6 +80,7 @@ public class UserController {
         return "normal/add_contact_form";
     }
 
+    //processing add contact form
     @PostMapping("/process-contact")
     public String processContact(@ModelAttribute Contact contact, @RequestParam("profileImage") MultipartFile file, Principal principal, HttpSession session) {
         try {
@@ -171,6 +172,44 @@ public class UserController {
         model.addAttribute("contact",contact);
         return "normal/update-contact";
     }
+
+    @PostMapping("/process-contact1")
+   public String updateHandler(@ModelAttribute Contact contact,@RequestParam("profileImage") MultipartFile file,
+                               Model model,HttpSession session,Principal principal){
+
+        try{
+
+            //old contact detail
+
+          Contact oldContact=  contactRepository.findById(contact.getCid()).get();
+
+            if(!file.isEmpty()){
+
+                //file work
+                //rewrite
+                File deleteFile = new ClassPathResource("static/img").getFile();
+                File file1=new File(deleteFile,oldContact.getImage());
+                file1.delete();
+                //delete old image and add new
+                File saveFile = new ClassPathResource("static/img").getFile();
+                Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                contact.setImage(file.getOriginalFilename());
+            }else{
+                contact.setImage(oldContact.getImage());
+
+            }
+            User user=userRepository.getUserByEmail(principal.getName());
+            contact.setUser(user);
+            contactRepository.save(contact);
+            session.setAttribute("message",new Message("Your contact is updated !!!","alert-success"));
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "redirect:/user/" + contact.getCid()+"/contact";
+   }
 
 
 }

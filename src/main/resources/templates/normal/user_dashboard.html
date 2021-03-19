@@ -7,7 +7,19 @@
 <body>
 
 <section class="sec">
-    <span >this is private dashboard</span>
+    <div class="container text-center">
+
+            <div class="card card5 ">
+                <div class="card-body  mt-4">
+                    <img src="" style="width: 200px;height: 200px" class="my_profile_picture" th:src="@{'/img/user_logo.png' }" alt="profile photo"/>
+                </div>
+            </div>
+
+
+        <h1 class="home text-center mt-3 text-secondary font-italic font-weight-light">Start adding your contacts</h1>
+        <a th:href="@{/user/add-contact}" class="btn btn-primary mt-4 btn-block text-uppercase">Add new contact</a>
+
+    </div>
 
 </section>
 

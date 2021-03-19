@@ -163,7 +163,23 @@ input:focus{
 .table{
     background-color: #e2e2e2;
 }
+.table1,td,th{
+    background-color: #e2e2e2;
+    color: black;
+    border : 1px solid black;
+}
 .test{
     width: 90%;
     height: 90%;
+}
+.test1{
+    width: 90%;
+    height: 90%;
+}
+.my_profile_picture{
+    width: 35px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+
 }

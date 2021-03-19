@@ -25,8 +25,16 @@
             <tbody>
                 <tr th:each="c : ${contacts}">
                     <th scope="row" th:text="${'SCM2021-'+ c.cid}">1</th>
-                        <td th:text="${c.name}">Mark</td>
-                        <td th:text="${c.email}">Otto</td>
+
+                        <td>
+                            <img src="" class="my_profile_picture" th:src="@{'/img/' + ${c.image}}" alt="profile photo"/>
+                            <span th:text="${c.name}"></span>
+                        </td>
+                        <td>
+                            <a th:href="@{'/user/'+${c.cid}+'/contact'} " >
+                                <span th:text="${c.email}"></span>
+                            </a>
+                        </td>
                         <td th:text="${c.phone}">@mdo</td>
 
                     <td>

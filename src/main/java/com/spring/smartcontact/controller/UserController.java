@@ -24,6 +24,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -88,6 +89,7 @@ public class UserController {
             //processing and uploading file..
             if (file.isEmpty()) {
                 System.out.println("file is empty");
+                contact.setImage("contactLogo.png");
             } else {
                 //upload file to folder
                 contact.setImage(file.getOriginalFilename());
@@ -114,21 +116,33 @@ public class UserController {
     //per-page 5[n]
     //current page=0[page]
     @GetMapping("/show-contacts/{page}")
-    public String showContacts(@PathVariable("page") Integer page, Model model,Principal principal) {
+    public String showContacts(@PathVariable("page") Integer page, Model model, Principal principal) {
         model.addAttribute("title", "user contacts");
 
         String username = principal.getName();
         User user = userRepository.getUserByEmail(username);
         //current page and no. of entries
-        Pageable pageable=PageRequest.of(page,3);
-        Page<Contact> contacts= contactRepository.findContactByUser(user.getId(),pageable);
+        Pageable pageable = PageRequest.of(page, 3);
+        Page<Contact> contacts = contactRepository.findContactByUser(user.getId(), pageable);
 
-        model.addAttribute("contacts",contacts);
-        model.addAttribute("currentPage",page);
-        model.addAttribute("totalPages",contacts.getTotalPages());
+        model.addAttribute("contacts", contacts);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", contacts.getTotalPages());
 
         return "normal/show_contacts";
     }
 
+    //showing particular contact detail
+
+
+    @GetMapping("/{cId}/contact")
+    public String showContactDetailId(@PathVariable("cId") Integer cId ,Model model) {
+
+       Optional<Contact> contactOptional= contactRepository.findById(cId);
+       Contact contact=contactOptional.get();
+       model.addAttribute("contactId",contact);
+        System.out.println(cId);
+        return "normal/contact_id_details";
+    }
 
 }

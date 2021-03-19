@@ -136,12 +136,20 @@ public class UserController {
 
 
     @GetMapping("/{cId}/contact")
-    public String showContactDetailId(@PathVariable("cId") Integer cId ,Model model) {
+    public String showContactDetailId(@PathVariable("cId") Integer cId ,Model model,Principal principal) {
 
        Optional<Contact> contactOptional= contactRepository.findById(cId);
        Contact contact=contactOptional.get();
-       model.addAttribute("contactId",contact);
-        System.out.println(cId);
+      String email= principal.getName();
+      User user= userRepository.getUserByEmail(email);
+
+      if(user.getId()==contact.getUser().getId())
+      {
+          model.addAttribute("contactId",contact);
+          model.addAttribute("title",contact.getName());
+      }
+
+
         return "normal/contact_id_details";
     }
 

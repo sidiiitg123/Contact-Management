@@ -97,5 +97,8 @@ public class Contact {
         this.description = description;
     }
 
-
+    @Override
+    public boolean equals(Object obj) {
+        return this.cid==((Contact)obj).getCid();
+    }
 }
